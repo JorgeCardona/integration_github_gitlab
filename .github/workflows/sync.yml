@@ -27,7 +27,7 @@ jobs:
             git pull gitlab dev --rebase || exit 0
             git push gitlab dev:dev
           elif [ "${GITHUB_REF##*/}" == "main" ]; then
-            git pull gitlab main
+            git pull gitlab main --rebase || exit 0
             git push gitlab main:main
           elif [ "${GITHUB_REF##*/}" == "qa" ]; then
             git pull gitlab qa --rebase || exit 0
