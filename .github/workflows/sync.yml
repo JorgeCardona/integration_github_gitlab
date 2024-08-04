@@ -6,7 +6,7 @@ on:
       - main
       - dev
       - qa
-	  - uat
+      - uat
       - prod
 
 jobs:
@@ -23,14 +23,14 @@ jobs:
         run: |
           git remote add gitlab https://gitlab-ci-token:${{ secrets.TOKEN }}@gitlab.com/jorgecardona/integration_github_gitlab.git
           git fetch gitlab
-          if [ "${REF##*/}" == "dev" ]; then
+          if [ "${GITHUB_REF##*/}" == "dev" ]; then
             git push gitlab dev:dev
-          elif [ "${REF##*/}" == "main" ]; then
+          elif [ "${GITHUB_REF##*/}" == "main" ]; then
             git push gitlab main:main
-          elif [ "${REF##*/}" == "qa" ]; then
+          elif [ "${GITHUB_REF##*/}" == "qa" ]; then
             git push gitlab qa:qa
-          elif [ "${REF##*/}" == "uat" ]; then
-            git push gitlab prod:uat
-          elif [ "${REF##*/}" == "prod" ]; then
+          elif [ "${GITHUB_REF##*/}" == "uat" ]; then
+            git push gitlab uat:uat
+          elif [ "${GITHUB_REF##*/}" == "prod" ]; then
             git push gitlab prod:prod
           fi
