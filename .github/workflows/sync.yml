@@ -22,15 +22,20 @@ jobs:
       - name: Sync with GitLab
         run: |
           git remote add gitlab https://gitlab-ci-token:${{ secrets.GITLAB_TOKEN }}@gitlab.com/jorgecardona/integration_github_gitlab.git
-          #git fetch gitlab
+          git fetch gitlab
           if [ "${GITHUB_REF##*/}" == "dev" ]; then
+            git pull gitlab dev --rebase || exit 0
             git push gitlab dev:dev
           elif [ "${GITHUB_REF##*/}" == "main" ]; then
+            git pull gitlab main --rebase || exit 0
             git push gitlab main:main
           elif [ "${GITHUB_REF##*/}" == "qa" ]; then
+            git pull gitlab qa --rebase || exit 0
             git push gitlab qa:qa
           elif [ "${GITHUB_REF##*/}" == "uat" ]; then
+            git pull gitlab uat --rebase || exit 0
             git push gitlab uat:uat
           elif [ "${GITHUB_REF##*/}" == "prod" ]; then
+            git pull gitlab prod --rebase || exit 0
             git push gitlab prod:prod
           fi
