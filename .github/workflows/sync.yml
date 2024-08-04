@@ -27,10 +27,17 @@ jobs:
           # Handle sync for each branch
           for branch in main dev qa uat prod; do
             git checkout $branch
+            
+            # Perform rebase and handle conflicts
             git rebase gitlab/$branch || {
-              echo "Conflict or error occurred during rebase. Please resolve conflicts manually.";
-              exit 1;
+              echo "Conflict occurred during rebase. Attempting to skip conflicting commits.";
+              git rebase --skip || {
+                echo "Error skipping commits. Manual intervention required.";
+                exit 1;
+              }
             }
+            
+            # Push changes to GitLab
             git push gitlab $branch:$branch || {
               echo "Error pushing branch $branch to GitLab.";
               exit 1;
