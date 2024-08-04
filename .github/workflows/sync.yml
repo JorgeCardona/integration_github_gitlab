@@ -6,7 +6,7 @@ on:
       - main
       - dev
       - qa
-      - uat
+	  - uat
       - prod
 
 jobs:
@@ -17,20 +17,20 @@ jobs:
       - name: Checkout GitHub repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
 
       - name: Sync with GitLab
         run: |
-          git remote add gitlab https://gitlab-ci-token:${{ secrets.GITLAB_TOKEN }}@gitlab.com/jorgecardona/integration_gitlab.git
+          git remote add gitlab https://gitlab-ci-token:${{ secrets.TOKEN }}@gitlab.com/jorgecardona/integration_github_gitlab.git
           git fetch gitlab
-          if [ "${GITHUB_REF##*/}" == "dev" ]; then
+          if [ "${REF##*/}" == "dev" ]; then
             git push gitlab dev:dev
-          elif [ "${GITHUB_REF##*/}" == "main" ]; then
+          elif [ "${REF##*/}" == "main" ]; then
             git push gitlab main:main
-          elif [ "${GITHUB_REF##*/}" == "qa" ]; then
+          elif [ "${REF##*/}" == "qa" ]; then
             git push gitlab qa:qa
-          elif [ "${GITHUB_REF##*/}" == "uat" ]; then
-            git push gitlab uat:uat
-          elif [ "${GITHUB_REF##*/}" == "prod" ]; then
+          elif [ "${REF##*/}" == "uat" ]; then
+            git push gitlab prod:uat
+          elif [ "${REF##*/}" == "prod" ]; then
             git push gitlab prod:prod
           fi
