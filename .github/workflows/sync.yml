@@ -22,7 +22,7 @@ jobs:
       - name: Sync with GitLab
         run: |
           # Añadir GitLab como remoto
-          git remote add gitlab https://gitlab-ci-token:${{ secrets.GITLAB_TOKEN }}@gitlab.com/jorgecardona/integration_gitlab.git
+          git remote add gitlab https://gitlab-ci-token:${{ secrets.GITLAB_TOKEN }}@gitlab.com/jorgecardona/integration_github_gitlab.git
 
           # Obtener los últimos cambios de GitLab
           git fetch gitlab
