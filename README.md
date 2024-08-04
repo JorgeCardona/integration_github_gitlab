@@ -1,6 +1,7 @@
 ```git
 git remote add gitlab https://gitlab.com/jorgecardona/integration_github_gitlab.git
 git push gitlab --all
+12345
 ```
 
 ```yaml
